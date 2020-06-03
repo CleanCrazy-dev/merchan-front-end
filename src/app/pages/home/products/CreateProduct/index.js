@@ -16,6 +16,7 @@ import { setProducts } from "../index/actions";
 import { addProductAvartarApi, addNewProductApi } from "../index/api";
 
 import ProductCategories from "../ProductList/components/Categories";
+import { setMalls } from "../../malls/index/actions";
 
 const useStyles = (theme) => ({
   root: {
@@ -142,11 +143,15 @@ class CreateProductPage extends React.Component {
     if (this.handleValidation()) {
       const { product } = this.state;
       const newProduct = await addNewProductApi(product);
-      const { products, onSetProducts } = this.props;
+      const { products, onSetProducts, malls, onSetMalls } = this.props;
       let updatedProducts = update(products, {
         $push: [newProduct],
       });
       onSetProducts(updatedProducts);
+      const mall = malls.find((x)=>x.id === product.shoppingId)
+      mall.products.push(newProduct)
+      onSetProducts(updatedProducts);
+      onSetMalls(malls);
       this.props.history.push("/products");
     } else {
       alert("Form has errors.");
@@ -413,6 +418,7 @@ const mapStateToProps = createStructuredSelector({
 function dispatchToProps(dispatch) {
   return {
     onSetProducts: (products) => dispatch(setProducts(products)),
+    onSetMalls: (malls) => dispatch(setMalls(malls)),
   };
 }
 

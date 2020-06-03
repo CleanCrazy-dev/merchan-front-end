@@ -14,6 +14,7 @@ import { makeSelectProducts } from "../index/selectors";
 import { makeSelectMalls } from "../../malls/index/selectors";
 import { setProducts } from "../index/actions";
 import { addProductAvartarApi, updateProductApi } from "../index/api";
+import { setMalls } from '../../malls/index/actions';
 
 import ProductCategories from "../ProductList/components/Categories";
 
@@ -54,7 +55,7 @@ const useStyles = (theme) => ({
 });
 
 class DetailProductPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       originalProduct: {
@@ -166,7 +167,7 @@ class DetailProductPage extends React.Component {
         techSpects,
       };
       await updateProductApi(id, postBody);
-      const { products, onSetProducts } = this.props;
+      const { products, onSetProducts, malls, onSetMalls } = this.props;
       const productIds = products.map((product) => product.id);
       const currentProductIndex = productIds.findIndex(
         (productId) => productId === id
@@ -174,7 +175,11 @@ class DetailProductPage extends React.Component {
       const updatedProducts = update(products, {
         [currentProductIndex]: { $set: this.state.updatedProduct },
       });
+      const updateMall = malls.find((x)=>x.id === shoppingId)
+      const product = updateMall.products.find((p)=>p.id === id)
+      product.quantity = quantity
       onSetProducts(updatedProducts);
+      onSetMalls(malls)
       this.props.history.push("/products");
     } else {
       alert("Form has errors.");
@@ -196,8 +201,8 @@ class DetailProductPage extends React.Component {
       errors["productCode"] = "Cannot be empty";
     }
 
-     //Mall validataion
-     if (!fields["shoppingId"]) {
+    //Mall validataion
+    if (!fields["shoppingId"]) {
       formIsValid = false;
       errors["shoppingId"] = "Cannot be empty";
     }
@@ -227,7 +232,7 @@ class DetailProductPage extends React.Component {
     return formIsValid;
   };
 
-  render() {
+  render () {
     const { classes, malls } = this.props;
     const {
       updatedProduct: {
@@ -483,9 +488,10 @@ const mapStateToProps = createStructuredSelector({
   malls: makeSelectMalls(),
 });
 
-function dispatchToProps(dispatch) {
+function dispatchToProps (dispatch) {
   return {
     onSetProducts: (products) => dispatch(setProducts(products)),
+    onSetMalls: (malls) => dispatch(setMalls(malls)),
   };
 }
 

@@ -115,6 +115,7 @@ class ProductListPage extends React.Component {
           financialId,
           legalId,
           avartar,
+          products
         } = currentMall;
         const newMall = {
           id,
@@ -131,6 +132,7 @@ class ProductListPage extends React.Component {
           financialId,
           legalId,
           avartar,
+          products
         };
         finalArr.push(newMall);
         return finalArr;
@@ -169,13 +171,17 @@ class ProductListPage extends React.Component {
   handleDialogAction = async (e, action, target) => {
     if (action) {
       if (target === "openRemoveProductModal") {
-        const { activeProductId } = this.state;
+        const { activeProductId, shoppingId } = this.state;
         const updatedProducts = this.props.products.filter(
           (product) => product.id !== activeProductId
         );
         await deleteProductApi(activeProductId);
-        const { onSetProducts } = this.props;
+        const { onSetProducts, malls, onSetMalls } = this.props;
         onSetProducts(updatedProducts);
+        const mall = malls.find((x)=>x.id === shoppingId)
+        mall.products = mall.products.filter((p)=>p.id !== activeProductId)
+        onSetProducts(updatedProducts);
+        onSetMalls(malls);
       }
     }
     this.setState({

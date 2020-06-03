@@ -51,7 +51,7 @@ const useStyles = () => ({
 });
 
 class ShoppingListPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       malls: [],
@@ -80,6 +80,7 @@ class ShoppingListPage extends React.Component {
           financialId,
           legalId,
           avartar,
+          products
         } = currentMall;
         const newMall = {
           id,
@@ -96,6 +97,7 @@ class ShoppingListPage extends React.Component {
           financialId,
           legalId,
           avartar,
+          products
         };
         finalArr.push(newMall);
         return finalArr;
@@ -167,7 +169,7 @@ class ShoppingListPage extends React.Component {
     this.props.history.push("/malls/" + mallId);
   };
 
-  render() {
+  render () {
     const { classes } = this.props;
     const { openRemoveShoppingModal } = this.state;
     const { malls } = this.props;
@@ -175,6 +177,10 @@ class ShoppingListPage extends React.Component {
       <React.Fragment>
         <div className="row">
           {malls.map((mall) => {
+            const productQuantitys = mall.products && mall.products.length && mall.products.map(x => Number(x.quantity))
+            const productAmounts = productQuantitys && productQuantitys.reduce(function (a, b) {
+              return a + b
+            }, 0)
             return (
               <div className="col-md-4 align-self-stretch" key={mall.id}>
                 <Card className={classes.card}>
@@ -235,7 +241,7 @@ class ShoppingListPage extends React.Component {
                       <div>
                         <span style={{ fontWeight: "bold" }}>Products</span>
                         <span style={{ float: "right" }}>
-                          {/* {this.getProductsAmountByMallId(mall.id)} */}
+                          {productAmounts}
                         </span>
                       </div>
                     </CardContent>
@@ -281,7 +287,7 @@ const mapStateToProps = createStructuredSelector({
   products: makeSelectProducts(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onSetMalls: (malls) => dispatch(setMalls(malls)),
     onSetPartners: (partners) => dispatch(setPartners(partners)),
