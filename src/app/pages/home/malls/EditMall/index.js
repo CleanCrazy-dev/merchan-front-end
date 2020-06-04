@@ -12,7 +12,7 @@ import TeamDetail from "./TeamDetail";
 import StaticsPage from "./Statistics";
 import { withStyles } from "@material-ui/core/styles";
 import { makeSelectUsers } from "../../users/index/selectors";
-import { makeSelectMalls } from "../index/selectors";
+import { makeSelectMalls, makeSelectPartners } from "../index/selectors";
 import { setMalls } from "../index/actions";
 import { setUsers } from "../../users/index/actions";
 import { fetchAllUsersApi } from "../../users/index/api";
@@ -25,7 +25,7 @@ const useStyles = (theme) => ({
 });
 
 class EditMallPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       activeTab: 0,
@@ -220,6 +220,7 @@ class EditMallPage extends React.Component {
             shoppingDetailState={shoppingDetailState}
             handleChangeShoppingAvartar={this.handleChangeShoppingAvartar}
             handleUpdateMall={this.handleUpdateMall}
+            handleCompanyNumberChange={this.handleCompanyNumberChange}
           />
         );
       case 1:
@@ -228,6 +229,8 @@ class EditMallPage extends React.Component {
             partnerPageState={partnerPageState}
             handleChangePartner={this.handleChangePartner}
             handleUpdateMall={this.handleUpdateMall}
+            handleCompanyNumberChangePartner={this.handleCompanyNumberChangePartner.bind(this)}
+            partners={this.props.partners}
           />
         );
       case 2:
@@ -290,7 +293,41 @@ class EditMallPage extends React.Component {
     }
   };
 
-  render() {
+  handleCompanyNumberChange = async (event) => {
+    const value = event.target ? event.target.value : event
+    if (value) {
+      const { partners } = this.props
+      const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+      if (existedPartners) {
+        const updatedMall = update(this.state.updatedMall, {
+          companyName: {
+            $set: existedPartners.companyName,
+          },
+        });
+        this.setState({
+          updatedMall,
+        });
+      }
+    }
+  };
+
+  handleCompanyNumberChangePartner (event, p) {
+    const value = event.target ? event.target.value : event
+    if (value) {
+      const { partners } = this.props
+      const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+      if (existedPartners) {
+        const updatePartners = [...this.state.updatedMall.partners]
+        const updatingPartner = updatePartners[p.rowData.id]
+        if (updatingPartner) updatingPartner.companyName = existedPartners.companyName
+        this.setState({
+          updatedMall: { ...this.state.updatedMall, partners: updatePartners }
+        });
+      }
+    }
+  };
+
+  render () {
     const { activeTab } = this.state;
     const { classes } = this.props;
     return (
@@ -330,9 +367,10 @@ EditMallPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   malls: makeSelectMalls(),
   users: makeSelectUsers(),
+  partners: makeSelectPartners(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onSetMalls: (malls) => dispatch(setMalls(malls)),
     onSetUsers: (users) => dispatch(setUsers(users)),

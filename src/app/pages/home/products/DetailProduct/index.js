@@ -175,9 +175,17 @@ class DetailProductPage extends React.Component {
       const updatedProducts = update(products, {
         [currentProductIndex]: { $set: this.state.updatedProduct },
       });
-      const updateMall = malls.find((x)=>x.id === shoppingId)
-      const product = updateMall.products.find((p)=>p.id === id)
-      product.quantity = quantity
+      const updateMall = malls.find((x) => x.id === shoppingId)
+      const product = updateMall.products.find((p) => p.id === id)
+      if (product) product.quantity = quantity
+      //in case update mall
+      else {
+        updateMall.products.push(this.state.updatedProduct)
+        const oldShoppingId = this.oldShoppingId || this.state.originalProduct.shoppingId
+        const removeMall = malls.find((x) => x.id === oldShoppingId)
+        removeMall.products = removeMall.products.filter((p) => p.id !== id)
+        this.oldShoppingId = oldShoppingId
+      }
       onSetProducts(updatedProducts);
       onSetMalls(malls)
       this.props.history.push("/products");

@@ -15,9 +15,9 @@ import { toAbsoluteUrl } from "../../../../../_metronic/utils/utils";
 // Custom stepper imports
 import clsx from "clsx";
 import StepConnector from "@material-ui/core/StepConnector";
-import { addNewShoppingApi } from "../index/api";
+import { addNewShoppingApi, fetchAllPartnersApi } from "../index/api";
 
-import { setMalls } from "../index/actions";
+import { setMalls, setPartners } from "../index/actions";
 import { makeSelectMalls, makeSelectPartners } from "../index/selectors";
 import { makeSelectUsers } from "../../users/index/selectors";
 import { setUsers } from "../../users/index/actions";
@@ -135,10 +135,14 @@ class CreateShoppingPage extends React.Component {
     this.setState({
       steps,
     });
-    const { users, onSetUsers } = this.props;
+    const { users, onSetUsers, partners, onSetPartners } = this.props;
     if (users.length === 0) {
       const users = await fetchAllUsersApi();
       onSetUsers(users);
+    }
+    if(partners.length === 0) {
+      const partners = await fetchAllPartnersApi();
+      onSetPartners(partners);
     }
   };
   getSteps = () => {
@@ -314,6 +318,7 @@ class CreateShoppingPage extends React.Component {
             shoppingDetailState={shoppingDetailState}
             handleChangeShoppingAvartar={this.handleChangeShoppingAvartar}
             errors={this.state.errors}
+            handleCompanyNumberChange={this.handleCompanyNumberChange}
           />
         );
       case 1:
@@ -321,6 +326,7 @@ class CreateShoppingPage extends React.Component {
           <PartnerPage
             partnerPageState={partnerPageState}
             handleChangePartner={this.handleChangePartner}
+            handleCompanyNumberChange={this.handleCompanyNumberChange}
           />
         );
       case 2:
@@ -374,6 +380,17 @@ class CreateShoppingPage extends React.Component {
     });
     onSetMalls(updatedMalls);
     this.props.history.push("/malls/");
+  };
+
+  handleCompanyNumberChange = (event) => {
+    const value = event.target ? event.target.value : event
+    if(value) {
+      const { partners } = this.props
+      const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+      if (existedPartners) {
+        this.setState({companyName: existedPartners.companyName});
+      }
+    }
   };
 
   render() {
@@ -435,6 +452,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onSetMalls: (malls) => dispatch(setMalls(malls)),
     onSetUsers: (users) => dispatch(setUsers(users)),
+    onSetPartners: (partners) => dispatch(setPartners(partners)),
   };
 }
 

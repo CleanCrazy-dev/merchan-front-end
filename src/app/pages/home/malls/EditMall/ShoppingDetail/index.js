@@ -35,7 +35,7 @@ const useStyles = () => ({
   },
 });
 class ShoppingDetail extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {};
   }
@@ -48,12 +48,13 @@ class ShoppingDetail extends React.Component {
       handleChangeShoppingAvartar(changedImage);
     }
   };
-  render() {
+  render () {
     const {
       classes,
       handleDetailsChange,
       shoppingDetailState,
       handleUpdateMall,
+      handleCompanyNumberChange
     } = this.props;
     const {
       fantasiaName = "",
@@ -154,6 +155,7 @@ class ShoppingDetail extends React.Component {
                         onChange={(event) =>
                           handleDetailsChange(event, "companyNumber")
                         }
+                        onBlur={(e) => handleCompanyNumberChange(e)}
                       >
                         {() => (
                           <TextField

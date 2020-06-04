@@ -21,20 +21,21 @@ const useStyles = () => ({
 });
 
 class PartnerPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       columns: [
         {
           title: "CNPJ",
           field: "companyNumber",
-          editComponent: (props) => (
+          editComponent: (propsC) => (
             <InputMask
               mask="99.999.999/9999-99"
-              value={props.value}
+              value={propsC.value}
               disabled={false}
               maskChar=" "
-              onChange={(e) => props.onChange(e.target.value)}
+              onChange={(e) => propsC.onChange(e.target.value)}
+              onBlur={(e) => this.handleInputBlur(e, propsC)}
             >
               {() => (
                 <TextField
@@ -49,21 +50,34 @@ class PartnerPage extends React.Component {
         },
         {
           title: "Company Name",
-          field: "companyname",
-          editComponent: (props) => (
+          field: "companyName",
+          editComponent: (propsC) => (
             <TextField
               id="outlined-basic"
               label="CompanyName"
               variant="outlined"
-              value={props.value}
-              onChange={(e) => props.onChange(e.target.value)}
+              defaultValue={propsC.rowData.companyName}
+              onChange={(e) => propsC.onChange(e.target.value)}
             />
           ),
         },
       ],
     };
   }
-  render() {
+
+  handleInputBlur (e, propsC) {
+    const el = document.getElementById('outlined-basic')
+    const { partners } = this.props
+    const value = e.target ? e.target.value : e
+    const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+    if (existedPartners) {
+      el.value = existedPartners.companyName
+    }
+
+    this.props.handleCompanyNumberChangePartner(e, propsC)
+  }
+
+  render () {
     const { columns } = this.state;
     const {
       partnerPageState,
