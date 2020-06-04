@@ -71,13 +71,15 @@ class PartnerPage extends React.Component {
     }
   };
 
-  handleCompanyNumberChange (event, setFieldValue) {
+  handleCompanyNumberChange (event, setFieldValue, errors) {
     const value = event.target ? event.target.value : event
-    if(value) {
+    if (value) {
       const { partners } = this.props
       const existedPartners = partners && partners.find((p) => p.companyNumber === value)
       if (existedPartners) {
         setFieldValue('companyName', existedPartners.companyName);
+      } else if(Object.keys(errors).length === 0) {
+        setFieldValue('companyName', '');
       }
     }
   };
@@ -105,7 +107,7 @@ class PartnerPage extends React.Component {
                       setFieldValue(name, e.target.value);
                       props.onChange(e.target.value);
                     }}
-                    onBlur={(e) => this.handleCompanyNumberChange(e, setFieldValue)}
+                    onBlur={(e) => this.handleCompanyNumberChange(e, setFieldValue, errors)}
                   >
                     {() => (
                       <TextField
@@ -126,7 +128,7 @@ class PartnerPage extends React.Component {
                     type="text"
                     label="CompanyName"
                     variant="outlined"
-                    value={props.value || values.companyName || ""}
+                    value={values.companyName || ""}
                     error={showError}
                     onChange={(e) => {
                       props.onChange(e.target.value);
@@ -177,7 +179,8 @@ class PartnerPage extends React.Component {
             console.log('values:', values)
             if (values) {
               if (values.companyNumber) {
-                if (props.mode === "update") delete values.tableData;
+                if (props.mode === "update" && (props.data.companyName !== values.companyName
+                  || props.data.companyNumber !== values.companyNumber)) delete values.tableData;
                 onEditingApproved(props.mode, values, props.data);
               }
             }
