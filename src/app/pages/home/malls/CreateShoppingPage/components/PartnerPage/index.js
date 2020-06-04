@@ -30,7 +30,7 @@ const useStyles = () => ({
 });
 
 class PartnerPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       columns: [
@@ -71,7 +71,18 @@ class PartnerPage extends React.Component {
     }
   };
 
-  render() {
+  handleCompanyNumberChange (event, setFieldValue) {
+    const value = event.target ? event.target.value : event
+    if(value) {
+      const { partners } = this.props
+      const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+      if (existedPartners) {
+        setFieldValue('companyName', existedPartners.companyName);
+      }
+    }
+  };
+
+  render () {
     const { columns } = this.state;
     const { partnerPageState, handleChangePartner } = this.props;
     const { partners = [] } = partnerPageState;
@@ -94,6 +105,7 @@ class PartnerPage extends React.Component {
                       setFieldValue(name, e.target.value);
                       props.onChange(e.target.value);
                     }}
+                    onBlur={(e) => this.handleCompanyNumberChange(e, setFieldValue)}
                   >
                     {() => (
                       <TextField
@@ -114,7 +126,7 @@ class PartnerPage extends React.Component {
                     type="text"
                     label="CompanyName"
                     variant="outlined"
-                    value={props.value || ""}
+                    value={props.value || values.companyName || ""}
                     error={showError}
                     onChange={(e) => {
                       props.onChange(e.target.value);
@@ -162,7 +174,7 @@ class PartnerPage extends React.Component {
           }}
           initialValues={props.data ? props.data : { id: 0 }}
           onSubmit={(values) => {
-            console.log('values:',values)
+            console.log('values:', values)
             if (values) {
               if (values.companyNumber) {
                 if (props.mode === "update") delete values.tableData;
@@ -246,7 +258,7 @@ const mapStateToProps = createStructuredSelector({
   partners: makeSelectPartners(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onSetPartners: (partners) => dispatch(setPartners(partners)),
   };

@@ -65,6 +65,7 @@ class ShoppingDetails extends React.Component {
       handleDetailsChange,
       shoppingDetailState,
       errors,
+      handleCompanyNumberChange
     } = this.props;
     const {
       fantasiaName = "",
@@ -172,6 +173,7 @@ class ShoppingDetails extends React.Component {
                         onChange={(event) =>
                           handleDetailsChange(event, "companyNumber")
                         }
+                        onBlur={(e) => handleCompanyNumberChange(e)}
                       >
                         {() => <TextField type="text" variant="outlined" />}
                       </InputMask>
