@@ -274,7 +274,7 @@ export default class FormsExamplesPage extends React.Component {
                 </span>
                 <div className="kt-separator kt-separator--dashed"></div>
                 <Form>
-                  <Form.Group controlId="formBasicEmail">
+                  <Form.Group>
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" />
                     <Form.Text className="text-muted">
