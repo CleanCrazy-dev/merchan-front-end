@@ -316,7 +316,7 @@ class CreateUserPage extends React.Component {
                           {this.state.errors["username"]}
                         </span>
                       </Form.Group>
-                      <Form.Group controlId="formBasicEmail">
+                      <Form.Group>
                         <Form.Label>E-mail</Form.Label>
                         <Form.Control
                           type="email"

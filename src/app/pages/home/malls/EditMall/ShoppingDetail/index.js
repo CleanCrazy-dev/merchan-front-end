@@ -116,7 +116,7 @@ class ShoppingDetail extends React.Component {
                 </div>
                 <div className="col-md-8" style={{ padding: "10px 40px" }}>
                   <Form>
-                    <Form.Group controlId="formBasicEmail">
+                    <Form.Group>
                       <Form.Label>Fantasia Name</Form.Label>
                       <Form.Control
                         type="text"

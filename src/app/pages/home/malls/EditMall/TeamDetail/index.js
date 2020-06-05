@@ -11,6 +11,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 import { makeSelectUsers } from "../../../users/index/selectors";
 
+import CreateUserModal from "../../CreateUserModal";
+
 const useStyles = (theme) => ({
   root: {
     width: "100%",
@@ -32,6 +34,7 @@ class TeamPage extends React.Component {
       legalUsers: [],
       financialCheckedIndex: -1,
       LegalCheckedIndex: -1,
+      openCreateNewUserModal: false,
     };
   }
 
@@ -112,18 +115,55 @@ class TeamPage extends React.Component {
     });
   };
 
+  handleOpenNewUserModal = () => {
+    this.setState({
+      openCreateNewUserModal: true,
+    });
+  };
+
+  onCloseModal = (type) => {
+    if (type === "add") {
+      const { users } = this.props;
+      this.handleFilterUsersByType(users);
+    }
+    this.setState({
+      openCreateNewUserModal: false,
+    });
+  };
+
+  handleFilterUsersByType = (users) => {
+    const financialUsers = users.filter(
+      (user) => user.userType === "Financial"
+    );
+    const legalUsers = users.filter((user) => user.userType === "Legal");
+    this.setState({
+      financialUsers,
+      legalUsers,
+    });
+  };
+
   render() {
-    const { classes,handleUpdateMall } = this.props;
+    const { classes, handleUpdateMall } = this.props;
+    const { openCreateNewUserModal } = this.state;
     return (
       <div className="col-md-12" style={{ marginTop: 20 }}>
         <div className="row">
           <div className="col-md-12" style={{ textAlign: "right" }}>
-            <Button color="primary" className={classes.button} size="large">
+            <Button
+              color="primary"
+              className={classes.button}
+              size="large"
+              onClick={(e) => this.handleOpenNewUserModal(e)}
+            >
               <AddOutlinedIcon fontSize="default" />
               Add User
             </Button>
           </div>
         </div>
+        <CreateUserModal
+          open={openCreateNewUserModal}
+          onCloseModal={this.onCloseModal}
+        />
         <div className="row">
           <div className="col-md-6">
             <div className={classes.cardTitle}>
@@ -151,7 +191,11 @@ class TeamPage extends React.Component {
           className="row"
           style={{ padding: 20, float: "right", marginRight: 20 }}
         >
-          <Button variant="contained" color="primary" onClick = {handleUpdateMall}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUpdateMall}
+          >
             Save
           </Button>
         </div>

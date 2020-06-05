@@ -449,7 +449,7 @@ class EditUserPage extends React.Component {
                           {this.state.errors["username"]}
                         </span>
                       </Form.Group>
-                      <Form.Group controlId="formBasicEmail">
+                      <Form.Group>
                         <Form.Label>E-mail</Form.Label>
                         <Form.Control
                           type="email"
@@ -466,7 +466,7 @@ class EditUserPage extends React.Component {
                           {this.state.errors["email"]}
                         </span>
                       </Form.Group>
-                      <Form.Group controlId="formBasicEmail">
+                      <Form.Group>
                         <Form.Label>Telephone</Form.Label>
                         <Form.Control
                           type="text"
