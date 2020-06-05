@@ -326,7 +326,6 @@ class CreateShoppingPage extends React.Component {
           <PartnerPage
             partnerPageState={partnerPageState}
             handleChangePartner={this.handleChangePartner}
-            handleCompanyNumberChange={this.handleCompanyNumberChange}
           />
         );
       case 2:
