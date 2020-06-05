@@ -259,7 +259,7 @@ class EditMallPage extends React.Component {
           },
         });
         this.setState({
-          addedMall,
+          updatedMall: addedMall,
         });
         break;
       case "Delete":
