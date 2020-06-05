@@ -149,7 +149,7 @@ class CreateShoppingPage extends React.Component {
     return ["DetailShopping", "PartnerPage", "TeamPage"];
   };
   handleNext = () => {
-    // if (this.handleValidation()) {
+    if (this.handleValidation()) {
       if (this.state.activeStep === 2) {
         this.handlSaveNewShoppiing();
       } else {
@@ -157,9 +157,9 @@ class CreateShoppingPage extends React.Component {
           activeStep: this.state.activeStep + 1,
         });
       }
-    // } else {
-    //   alert("Form has errors.");
-    // }
+    } else {
+      alert("Form has errors.");
+    }
   };
 
   handleBack = () => {
