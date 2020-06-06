@@ -5,21 +5,10 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableContainer,
-  TablePagination,
-  Paper,
   Fab,
   InputBase,
   IconButton,
 } from "@material-ui/core";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
-import EditIcon from "@material-ui/icons/CreateOutlined";
-import { toAbsoluteUrl } from "../../../../../_metronic/utils/utils";
 import { Form } from "react-bootstrap";
 import ProductCategories from "./components/Categories";
 
@@ -31,6 +20,7 @@ import { fetchAllProductsApi, deleteProductApi } from "../index/api";
 import { fetchAllMallsApi } from "../../malls/index/api";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import MerchanDialog from "../../common/Dialog";
+import EnhancedTable from "./components/ProductSortingTable";
 
 const styles = () => ({
   root: {
@@ -69,9 +59,23 @@ const styles = () => ({
     },
   },
   cellLabel: {},
+  input: {
+    marginLeft: 8,
+    flex: 1,
+  },
 });
+
+const headCells = [
+  { id: 'image', numeric: false, disablePadding: true, label: '' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Product name' },
+  { id: 'productCode', numeric: false, disablePadding: false, label: 'Product code' },
+  { id: 'quantity', numeric: false, disablePadding: false, label: 'Quantity' },
+  { id: 'period', numeric: false, disablePadding: false, label: 'Period' },
+  { id: 'actions', numeric: false, disablePadding: false, label: '' },
+];
+
 class ProductListPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       rowsPerPage: 5,
@@ -161,7 +165,7 @@ class ProductListPage extends React.Component {
     this.props.history.push("/products/" + productId);
   };
 
-  openRemoveDialog = (event, value, target, activeProductId) => {
+  openRemoveDialog (event, value, target, activeProductId) {
     this.setState({
       [target]: value,
       activeProductId,
@@ -171,17 +175,19 @@ class ProductListPage extends React.Component {
   handleDialogAction = async (e, action, target) => {
     if (action) {
       if (target === "openRemoveProductModal") {
-        const { activeProductId, shoppingId } = this.state;
+        const { activeProductId } = this.state;
         const updatedProducts = this.props.products.filter(
           (product) => product.id !== activeProductId
         );
         await deleteProductApi(activeProductId);
         const { onSetProducts, malls, onSetMalls } = this.props;
         onSetProducts(updatedProducts);
-        const mall = malls.find((x)=>x.id === shoppingId)
-        mall.products = mall.products.filter((p)=>p.id !== activeProductId)
+        const mall = malls.find((x) => x.products.some((p) => p.id === activeProductId))
+        mall.products = mall.products.filter((p) => p.id !== activeProductId)
         onSetProducts(updatedProducts);
         onSetMalls(malls);
+        const filteredProducts = this.state.filteredProducts.filter((p) => p.id !== activeProductId)
+        this.setState({ filteredProducts: filteredProducts })
       }
     }
     this.setState({
@@ -198,7 +204,7 @@ class ProductListPage extends React.Component {
       });
     } else {
       const filteredProducts = this.state.filteredProducts.filter(
-        (product) => product.name === searchText
+        (product) => product.name && product.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
       );
       this.setState({
         filteredProducts,
@@ -229,11 +235,9 @@ class ProductListPage extends React.Component {
     });
   };
 
-  render() {
+  render () {
     const { classes, malls } = this.props;
     const {
-      rowsPerPage,
-      page,
       openRemoveProductModal,
       searchText,
       filteredProducts,
@@ -266,20 +270,27 @@ class ProductListPage extends React.Component {
           <div className="col-md-9">
             <div
               style={{
-                position: "relative",
-                float: "right",
+                position: "absolute",
+                marginLeft: 30,
+                backgroundColor: '#EAECF2',
+                borderRadius: 4,
+                width: 330,
+                height: 39,
+                top: -55,
+                right: 10,
+                display: 'inline-flex'
               }}
             >
               <InputBase
                 className={classes.input}
-                placeholder="Search User Names..."
+                placeholder="Search Product"
                 inputProps={{ "aria-label": "Search Google Maps" }}
                 name="searchText"
                 value={searchText}
                 onChange={(e) => this.onChangeSearchName(e)}
               />
               <IconButton aria-label="Search" onClick={this.handleSearchByName}>
-                <i className="flaticon-search"></i>
+                <i className="flaticon-search" style={{ color: '#374AFB', fontSize: 16 }}></i>
               </IconButton>
               {/* <SearchField
                 placeholder="Search..."
@@ -289,81 +300,13 @@ class ProductListPage extends React.Component {
               /> */}
             </div>
             <div className={classes.root}>
-              <Paper>
-                <TableContainer>
-                  <Table className={classes.table}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Product name</TableCell>
-                        <TableCell>Product code</TableCell>
-                        <TableCell>Quantity</TableCell>
-                        <TableCell>Period</TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {filteredProducts
-                        .slice(rowsPerPage * page, rowsPerPage * (page + 1))
-                        .map((product) => (
-                          <TableRow key={product.id}>
-                            <TableCell>
-                              <img
-                                src={
-                                  product.profileImage
-                                    ? product.profileImage
-                                    : toAbsoluteUrl("/media/users/default.jpg")
-                                }
-                                alt=""
-                                className={classes.image}
-                              />
-                            </TableCell>
-                            <TableCell className={classes.cellLabel}>
-                              {product.name}
-                            </TableCell>
-                            <TableCell className={classes.cellLabel}>
-                              {product.productCode}
-                            </TableCell>
-                            <TableCell className={classes.cellLabel}>
-                              {product.quantity}
-                            </TableCell>
-                            <TableCell className={classes.cellLabel}>
-                              {product.period}
-                            </TableCell>
-                            <TableCell className={classes.cellLabel}>
-                              <EditIcon
-                                className={classes.edit}
-                                onClick={(e) =>
-                                  this.openDetailProductPage(e, product.id)
-                                }
-                              />
-                              <DeleteForeverOutlinedIcon
-                                className={classes.delete}
-                                onClick={(e) =>
-                                  this.openRemoveDialog(
-                                    e,
-                                    true,
-                                    "openRemoveProductModal",
-                                    product.id
-                                  )
-                                }
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  component="div"
-                  count={filteredProducts.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onChangePage={this.handleChangePage}
-                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                />
-              </Paper>
+              <EnhancedTable
+                headCells={headCells}
+                rows={filteredProducts}
+                classes={classes}
+                openDetailProductPage={this.openDetailProductPage}
+                openRemoveDialog={this.openRemoveDialog.bind(this)}
+              />
             </div>
           </div>
         </div>
@@ -399,7 +342,7 @@ const mapStateToProps = createStructuredSelector({
   malls: makeSelectMalls(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onSetProducts: (products) => dispatch(setProducts(products)),
     onSetMalls: (malls) => dispatch(setMalls(malls)),

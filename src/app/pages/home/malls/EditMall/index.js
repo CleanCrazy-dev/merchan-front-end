@@ -332,9 +332,9 @@ class EditMallPage extends React.Component {
     const { classes } = this.props;
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-7">
           <div className={classes.root}>
-            <Paper>
+            <Paper className='tab-header'>
               <Tabs
                 value={activeTab}
                 indicatorColor="primary"
@@ -349,7 +349,7 @@ class EditMallPage extends React.Component {
             {this.renderActivePage()}
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-5">
           <Paper>
             <StaticsPage />
           </Paper>

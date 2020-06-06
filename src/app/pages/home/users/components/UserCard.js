@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
-    width: 100,
+    width: 64,
+    height: 64,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 4,
   },
 }));
 
@@ -28,7 +29,7 @@ export default function UserCardComponent(props) {
 
   return (
     <div className="col-md-3 align-self-stretch">
-      <div className="kt-section">
+      <div className="kt-section" style={{margin: '0 0 20px 0'}}>
         <div className="kt-section__content">
           <Card className={classes.card}>
             <CardMedia
@@ -37,7 +38,7 @@ export default function UserCardComponent(props) {
               title="Live from space album cover"
             />
             <div className={classes.details}>
-              <CardContent className={classes.content}>
+              <CardContent className={classes.content} style={{padding: '10px 0'}}>
                 <Typography component="h6" variant="h6">
                   {props.user.username}
                 </Typography>
@@ -46,7 +47,7 @@ export default function UserCardComponent(props) {
                 </Typography>
                 <Link to={"/users/" + props.user.id}>
                   <EditIcon
-                    style={{ position: "absolute", top: 15, right: 25 }}
+                    style={{ position: "absolute", top: 15, right: 25, color: '#8C8C92' }}
                   />
                 </Link>
               </CardContent>

@@ -14,20 +14,19 @@ const useStyles = () => ({
   },
   avatarImg: {
     borderRadius: 10,
-    width: 150,
-    height: 150,
+    width: 176,
+    height: 176,
     margin: 10,
   },
   input: {
     display: "none",
   },
   delete: {
-    height: 40,
-    width: 40,
-    margin: 5,
+    height: 30,
+    width: 30,
+    margin: 8,
     color: "red",
-    backgroundColor: "#FBE8E2",
-    border: "solid 5px #FBE8E2",
+    border: "1px solid #E74141",
     borderRadius: 5,
     "&:hover": {
       cursor: "pointer",
@@ -102,9 +101,9 @@ class ShoppingDetail extends React.Component {
                     <label htmlFor="icon-button-file">
                       <span
                         style={{
-                          border: "solid 2px #5867DD",
+                          border: "solid 1px #374AFB",
                           color: "#5867DD",
-                          borderRadius: "3px",
+                          borderRadius: "4px",
                           padding: "5px 10px",
                           cursor: "pointer",
                         }}

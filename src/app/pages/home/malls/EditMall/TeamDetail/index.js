@@ -27,7 +27,7 @@ const useStyles = (theme) => ({
 });
 
 class TeamPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       financialUsers: [],
@@ -142,7 +142,7 @@ class TeamPage extends React.Component {
     });
   };
 
-  render() {
+  render () {
     const { classes, handleUpdateMall } = this.props;
     const { openCreateNewUserModal } = this.state;
     return (
@@ -170,8 +170,13 @@ class TeamPage extends React.Component {
               <span>Financial</span>
             </div>
             <Card>
-              <CardContent>
-                <List className={classes.root}>{this.mapFiancialRow()}</List>
+              <CardContent style={{ backgroundColor: '#F8F9FB' }}>
+                <List
+                  className={classes.root}
+                  style={{ backgroundColor: '#F8F9FB' }}
+                >
+                  {this.mapFiancialRow()}
+                </List>
               </CardContent>
             </Card>
           </div>
@@ -180,8 +185,8 @@ class TeamPage extends React.Component {
               <span>Legal</span>
             </div>
             <Card>
-              <CardContent>
-                <List className={classes.root}>{this.mapLegalRow()}</List>
+              <CardContent style={{ backgroundColor: '#F8F9FB' }}>
+                <List style={{ backgroundColor: '#F8F9FB' }} className={classes.root}>{this.mapLegalRow()}</List>
               </CardContent>
             </Card>
           </div>
