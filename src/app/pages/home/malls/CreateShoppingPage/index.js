@@ -373,6 +373,7 @@ class CreateShoppingPage extends React.Component {
       avartar,
     };
     const newShopping = await addNewShoppingApi(postBody);
+    newShopping.products = []
     const { onSetMalls, malls } = this.props;
     let updatedMalls = update(malls, {
       $push: [newShopping],
