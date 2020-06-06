@@ -147,7 +147,7 @@ class ShoppingDetails extends React.Component {
                       {errors["fantasiaName"]}
                     </span>
                   </Form.Group>
-                  <Form.Group controlId="formBasicCompanyName">
+                  <Form.Group>
                     <Form.Label>CompanyName</Form.Label>
                     <Form.Control
                       type="text"
@@ -162,7 +162,7 @@ class ShoppingDetails extends React.Component {
                       {errors["companyName"]}
                     </span>
                   </Form.Group>
-                  <Form.Group controlId="formBasicCNPJ">
+                  <Form.Group>
                     <Form.Label>CNPJ</Form.Label>
                     <div>
                       <InputMask
@@ -182,7 +182,7 @@ class ShoppingDetails extends React.Component {
                       {errors["companyNumber"]}
                     </span>
                   </Form.Group>
-                  <Form.Group controlId="formBasicCEP">
+                  <Form.Group>
                     <Form.Label>CEP</Form.Label>
                     <div>
                       <InputMask
@@ -202,7 +202,7 @@ class ShoppingDetails extends React.Component {
                     </span>
                   </Form.Group>
 
-                  <Form.Group controlId="formBasicAddress">
+                  <Form.Group>
                     <Form.Label>Address</Form.Label>
                     <Form.Control
                       type="text"
@@ -216,7 +216,7 @@ class ShoppingDetails extends React.Component {
                     <span style={{ color: "red" }}>{errors["address"]}</span>
                   </Form.Group>
                   <Form.Row>
-                    <Form.Group controlId="formBasicNumber" as={Col} md="3">
+                    <Form.Group as={Col} md="3">
                       <Form.Label>Number</Form.Label>
                       <Form.Control
                         type="number"
@@ -232,7 +232,6 @@ class ShoppingDetails extends React.Component {
                       </span>
                     </Form.Group>
                     <Form.Group
-                      controlId="formBasicNeighborhood"
                       as={Col}
                       md="9"
                     >
@@ -252,7 +251,7 @@ class ShoppingDetails extends React.Component {
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
-                    <Form.Group controlId="formBasicCity" as={Col}>
+                    <Form.Group as={Col}>
                       <Form.Label>City</Form.Label>
                       <Form.Control
                         type="text"
@@ -263,7 +262,7 @@ class ShoppingDetails extends React.Component {
                       />
                       <span style={{ color: "red" }}>{errors["city"]}</span>
                     </Form.Group>
-                    <Form.Group controlId="formBasicState" as={Col}>
+                    <Form.Group as={Col}>
                       <Form.Label>State</Form.Label>
                       <Form.Control
                         type="text"

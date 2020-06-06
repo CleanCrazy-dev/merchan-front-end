@@ -9,7 +9,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { Paper, TextField } from "@material-ui/core";
 import { Form, Col, Button, InputGroup, FormControl } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../../../_metronic/utils/utils";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import { makeSelectProducts } from "../index/selectors";
 import { makeSelectMalls } from "../../malls/index/selectors";
 import { setProducts } from "../index/actions";

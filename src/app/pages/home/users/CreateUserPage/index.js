@@ -302,7 +302,7 @@ class CreateUserPage extends React.Component {
                   </div>
                   <div className="col-md-8" style={{ padding: "40px" }}>
                     <Form>
-                      <Form.Group controlId="createUserFullNametxt">
+                      <Form.Group>
                         <Form.Label>Full Name</Form.Label>
                         <Form.Control
                           type="text"
@@ -329,7 +329,7 @@ class CreateUserPage extends React.Component {
                           {this.state.errors["email"]}
                         </span>
                       </Form.Group>
-                      <Form.Group controlId="formBasicPhoneNumber">
+                      <Form.Group>
                         <InputMask
                           mask={"(99)99999-9999"}
                           value={updatedPhoneNumber}
@@ -352,7 +352,7 @@ class CreateUserPage extends React.Component {
                       <span style={{ color: "red" }}>
                         {this.state.errors["phoneNumber"]}
                       </span>
-                      <Form.Group controlId="radioGroup">
+                      <Form.Group>
                         <FormLabel component="legend">Role</FormLabel>
                         <div className="d-flex width-full">
                           <div>
@@ -443,7 +443,7 @@ class CreateUserPage extends React.Component {
                       )}
 
                       <Form.Row>
-                        <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Group as={Col}>
                           <Form.Label>Password</Form.Label>
                           <Form.Control
                             type="password"
@@ -457,7 +457,7 @@ class CreateUserPage extends React.Component {
                           </span>
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridRePassword">
+                        <Form.Group as={Col}>
                           <Form.Label>Repeat Password</Form.Label>
                           <Form.Control
                             type="password"

@@ -247,7 +247,7 @@ class ProductListPage extends React.Component {
       <React.Fragment>
         <div className="row">
           <div className="col-md-3">
-            <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Group>
               <Form.Label>SHOPPING</Form.Label>
               <Form.Control
                 as="select"

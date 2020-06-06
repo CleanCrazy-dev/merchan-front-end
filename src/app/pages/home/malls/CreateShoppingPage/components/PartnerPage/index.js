@@ -30,7 +30,7 @@ const useStyles = () => ({
 });
 
 class PartnerPage extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       columns: [
@@ -71,20 +71,21 @@ class PartnerPage extends React.Component {
     }
   };
 
-  handleCompanyNumberChange (event, setFieldValue, errors) {
-    const value = event.target ? event.target.value : event
+  handleCompanyNumberChange(event, setFieldValue, errors) {
+    const value = event.target ? event.target.value : event;
     if (value) {
-      const { partners } = this.props
-      const existedPartners = partners && partners.find((p) => p.companyNumber === value)
+      const { partners } = this.props;
+      const existedPartners =
+        partners && partners.find((p) => p.companyNumber === value);
       if (existedPartners) {
-        setFieldValue('companyName', existedPartners.companyName);
-      } else if(Object.keys(errors).length === 0) {
-        setFieldValue('companyName', '');
+        setFieldValue("companyName", existedPartners.companyName);
+      } else if (Object.keys(errors).length === 0) {
+        setFieldValue("companyName", "");
       }
     }
-  };
+  }
 
-  render () {
+  render() {
     const { columns } = this.state;
     const { partnerPageState, handleChangePartner } = this.props;
     const { partners = [] } = partnerPageState;
@@ -93,7 +94,7 @@ class PartnerPage extends React.Component {
         <Field name={props.columnDef.field}>
           {({ field, form }) => {
             const { name } = field;
-            const { errors, setFieldValue, submitForm, values } = form;
+            const { errors, setFieldValue, values } = form;
             const showError = !!getIn(errors, name);
             if (name === "companyNumber") {
               return (
@@ -107,7 +108,9 @@ class PartnerPage extends React.Component {
                       setFieldValue(name, e.target.value);
                       props.onChange(e.target.value);
                     }}
-                    onBlur={(e) => this.handleCompanyNumberChange(e, setFieldValue, errors)}
+                    onBlur={(e) =>
+                      this.handleCompanyNumberChange(e, setFieldValue, errors)
+                    }
                   >
                     {() => (
                       <TextField
@@ -133,17 +136,6 @@ class PartnerPage extends React.Component {
                     onChange={(e) => {
                       props.onChange(e.target.value);
                       setFieldValue(name, e.target.value);
-                    }}
-                    onKeyPress={(event) => {
-                      if (event.key === "Enter") {
-                        const result = this.getMatchedCompanyNameByCompanyNumber(
-                          values.companyNumber
-                        );
-                        if (result) {
-                          setFieldValue(name, result);
-                          submitForm(values);
-                        }
-                      }
                     }}
                   />
                   {errors[field.name] && <div>{errors[field.name]}</div>}
@@ -176,11 +168,14 @@ class PartnerPage extends React.Component {
           }}
           initialValues={props.data ? props.data : { id: 0 }}
           onSubmit={(values) => {
-            console.log('values:', values)
             if (values) {
               if (values.companyNumber) {
-                if (props.mode === "update" && (props.data.companyName !== values.companyName
-                  || props.data.companyNumber !== values.companyNumber)) delete values.tableData;
+                if (
+                  props.mode === "update" &&
+                  (props.data.companyName !== values.companyName ||
+                    props.data.companyNumber !== values.companyNumber)
+                )
+                  delete values.tableData;
                 onEditingApproved(props.mode, values, props.data);
               }
             }
@@ -261,7 +256,7 @@ const mapStateToProps = createStructuredSelector({
   partners: makeSelectPartners(),
 });
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     onSetPartners: (partners) => dispatch(setPartners(partners)),
   };

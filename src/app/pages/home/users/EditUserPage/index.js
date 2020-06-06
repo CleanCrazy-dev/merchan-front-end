@@ -430,7 +430,7 @@ class EditUserPage extends React.Component {
                   </div>
                   <div className="col-md-8" style={{ padding: "40px" }}>
                     <Form>
-                      <Form.Group controlId="editUserFullNametxt">
+                      <Form.Group>
                         <Form.Label>Full Name</Form.Label>
                         <Form.Control
                           type="text"
@@ -482,7 +482,7 @@ class EditUserPage extends React.Component {
                           {this.state.errors["phoneNumber"]}
                         </span>
                       </Form.Group>
-                      <Form.Group controlId="radioGroup">
+                      <Form.Group>
                         <FormLabel component="legend">Role</FormLabel>
                         <div className="d-flex width-full">
                           <div>
@@ -583,7 +583,7 @@ class EditUserPage extends React.Component {
                         </Form.Group>
                       )}
                       <Form.Row>
-                        <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Group as={Col}>
                           <Form.Label>Password</Form.Label>
                           <Form.Control
                             type="password"
@@ -601,7 +601,7 @@ class EditUserPage extends React.Component {
                           </span>
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridRePassword">
+                        <Form.Group as={Col}>
                           <Form.Label>Repeat Password</Form.Label>
                           <Form.Control
                             type="password"
