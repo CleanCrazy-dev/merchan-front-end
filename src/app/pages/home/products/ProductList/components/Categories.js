@@ -55,7 +55,7 @@ class ProductCategories extends React.Component {
                     value="checkedA"
                   />
                 }
-                label="Secondary"
+                label="Escalator / Fixed - Set"
               />
               <FormControlLabel
                 control={
@@ -65,7 +65,7 @@ class ProductCategories extends React.Component {
                     value="checkedA"
                   />
                 }
-                label="Secondary"
+                label="Food Court - Set (Tables and columns)"
               />
               <FormControlLabel
                 control={
@@ -75,7 +75,7 @@ class ProductCategories extends React.Component {
                     value="checkedA"
                   />
                 }
-                label="Secondary"
+                label="Access Doors - Mall (Set)"
               />
               <FormControlLabel
                 control={
@@ -85,7 +85,7 @@ class ProductCategories extends React.Component {
                     value="checkedA"
                   />
                 }
-                label="Secondary"
+                label="Main - Internal"
               />
             </FormGroup>
           </ExpansionPanelDetails>
@@ -113,6 +113,42 @@ class ProductCategories extends React.Component {
             id="panel3a-header"
           >
             <Typography className={classes.heading}>Targeted media</Typography>
+          </ExpansionPanelSummary>
+        </ExpansionPanel>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>Indoor Exhibition Spaces</Typography>
+          </ExpansionPanelSummary>
+        </ExpansionPanel>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>External Exhibition Spaces</Typography>
+          </ExpansionPanelSummary>
+        </ExpansionPanel>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>Indoor / outdoor exhibition spaces</Typography>
+          </ExpansionPanelSummary>
+        </ExpansionPanel>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>High Impact Internal / External Digital Media</Typography>
           </ExpansionPanelSummary>
         </ExpansionPanel>
       </div>

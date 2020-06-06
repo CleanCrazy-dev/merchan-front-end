@@ -275,13 +275,6 @@ class DetailProductPage extends React.Component {
                       className={classes.avatarImg}
                     />
                     <div style={{ paddingLeft: "20px" }}>
-                      <span>
-                        <DeleteForeverOutlinedIcon
-                          className={classes.delete}
-                          fontSize="large"
-                          color="error"
-                        />
-                      </span>
                       <input
                         accept="image/*"
                         className={classes.input}
@@ -292,7 +285,7 @@ class DetailProductPage extends React.Component {
                       <label htmlFor="icon-button-file">
                         <span
                           style={{
-                            border: "solid 2px #5867DD",
+                            border: "solid 1px #374AFB",
                             color: "#5867DD",
                             borderRadius: "3px",
                             padding: "5px 10px",

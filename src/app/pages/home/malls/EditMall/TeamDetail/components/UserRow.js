@@ -30,8 +30,9 @@ class UserRow extends React.Component {
         dense
         button
         onClick={(e) =>handleToggle(e,value,name)}
+        style={{background: '#fff', marginBottom: 5, paddingLeft: 5}}
       >
-        <ListItemIcon>
+        <ListItemIcon style={{minWidth: 45}}>
           <Radio
             checked={checked}
             value={value}

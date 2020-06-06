@@ -20,6 +20,7 @@ import { fetchAllUsersApi } from "../index/api";
 
 import { makeSelectUsers } from "../index/selectors";
 import { setUsers } from "../index/actions";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 
 // import SearchField from "react-search-field";
 
@@ -42,7 +43,7 @@ const useStyles = () => ({
   },
 });
 class UserListPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       filteredUsers: [],
@@ -151,9 +152,10 @@ class UserListPage extends React.Component {
 
   handleSearchByName = () => {
     const { searchText } = this.state;
-    const searchedUsers = this.props.users.filter(
-      (user) => user.username === searchText
+    let searchedUsers = this.props.users.filter(
+      (user) => user.username && user.username.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
     );
+    if (searchText.length === 0) searchedUsers = this.props.users
     this.setState({
       filteredUsers: searchedUsers,
       activeType: "",
@@ -161,14 +163,14 @@ class UserListPage extends React.Component {
     this.handlePagination(searchedUsers);
   };
 
-  render() {
+  render () {
     const { classes } = this.props;
     const { activeType, currentPageNumber, searchText } = this.state;
     return (
       <React.Fragment>
         <div
           className="kt-subheader__toolbar"
-          style={{ position: "relative", float: "right", marginTop: "-40px" }}
+          style={{ position: "relative", float: "right", marginTop: "-50px" }}
         >
           <div className="kt-subheader__wrapper">
             <FormControlLabel
@@ -253,8 +255,11 @@ class UserListPage extends React.Component {
               style={{
                 position: "relative",
                 float: "right",
-                marginTop: "-10px",
-                marginLeft: "30px",
+                marginLeft: 30,
+                backgroundColor: '#EAECF2',
+                borderRadius: 4,
+                width: 200,
+                height: 39
               }}
             >
               <InputBase
@@ -264,9 +269,12 @@ class UserListPage extends React.Component {
                 name="searchText"
                 value={searchText}
                 onChange={(e) => this.onChangeSearchName(e)}
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) this.handleSearchByName()
+                }}
               />
               <IconButton aria-label="Search" onClick={this.handleSearchByName}>
-                <i className="flaticon-search"></i>
+                <i className="flaticon-search" style={{ color: '#374AFB', fontSize: 16 }}></i>
               </IconButton>
               {/* <SearchField
                 placeholder="Search..."
@@ -277,7 +285,7 @@ class UserListPage extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{ marginTop: 20 }}>
+        <div className="row" style={{ marginTop: 5 }}>
           {this.mapUserCards()}
         </div>
         <div style={{ padding: 10 }}>
@@ -291,7 +299,7 @@ class UserListPage extends React.Component {
             page={currentPageNumber}
           />
         </div>
-        <div style={{ float: "right" }}>
+        <div style={{ float: "right", marginBottom: 30 }}>
           <Fab
             variant="extended"
             color="primary"
@@ -299,7 +307,10 @@ class UserListPage extends React.Component {
             className={classes.margin}
             onClick={this.createNewUser}
           >
-            <span style={{ margin: "0 10px" }}>New User</span>
+            <span style={{ margin: "0 10px" }}>
+              New User
+              <AddOutlinedIcon fontSize="large" style={{ marginLeft: 10 }} />
+            </span>
           </Fab>
         </div>
       </React.Fragment>
@@ -311,7 +322,7 @@ UserListPage.propTypes = {
   users: PropTypes.array,
 };
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onSetUsers: (users) => dispatch(setUsers(users)),
   };

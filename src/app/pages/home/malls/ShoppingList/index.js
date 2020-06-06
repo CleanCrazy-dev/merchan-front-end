@@ -35,6 +35,7 @@ import { setProducts } from "../../products/index/actions";
 const useStyles = () => ({
   card: {
     marginTop: 20,
+    padding: 15
   },
   details: {
     display: "flex",
@@ -196,6 +197,7 @@ class ShoppingListPage extends React.Component {
                             mall.id
                           )
                         }
+                        style={{ position: 'absolute', right: 20, top: 20 }}
                       >
                         <MoreHorizIcon />
                       </IconButton>
@@ -220,8 +222,8 @@ class ShoppingListPage extends React.Component {
                     style={{
                       margin: 10,
                       float: "left",
-                      minWidth: 100,
-                      minHeight: 60,
+                      minWidth: 80,
+                      minHeight: 80,
                     }}
                   />
                   <div style={{ padding: "20px 0" }}>
@@ -252,7 +254,7 @@ class ShoppingListPage extends React.Component {
                       color="primary"
                       fullWidth
                       onClick={(e) => this.openDetailMall(e, mall.id)}
-                      style={{ backgroundColor: "aliceblue" }}
+                      style={{ backgroundColor: "#F5F6FF" }}
                     >
                       View Shopping
                     </Button>

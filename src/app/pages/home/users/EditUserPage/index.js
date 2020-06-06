@@ -59,12 +59,11 @@ const useStyles = (theme) => ({
     display: "none",
   },
   delete: {
-    height: 40,
-    width: 40,
-    margin: 5,
+    height: 30,
+    width: 30,
+    margin: 8,
     color: "red",
-    backgroundColor: "#FBE8E2",
-    border: "solid 5px #FBE8E2",
+    border: "1px solid #E74141",
     borderRadius: 5,
     "&:hover": {
       cursor: "pointer",
@@ -76,7 +75,7 @@ const ITEM_HEIGHT = 48;
 const options5 = ["Edit", "Delete"];
 
 class EditUserPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       anchorEl5: null,
@@ -361,7 +360,7 @@ class EditUserPage extends React.Component {
     });
   };
 
-  render() {
+  render () {
     const { classes } = this.props;
     const {
       originalUser,
@@ -380,7 +379,7 @@ class EditUserPage extends React.Component {
     } = this.state;
     return (
       <div className="row">
-        <div className="col-md-8">
+        <div className="col-md-7">
           <Paper>
             <div className="kt-section">
               <span className="kt-section__sub">
@@ -402,9 +401,9 @@ class EditUserPage extends React.Component {
                         }
                       >
                         <DeleteForeverOutlinedIcon
-                           className={classes.delete}
-                           fontSize="large"
-                           color="error"
+                          className={classes.delete}
+                          fontSize="large"
+                          color="error"
                         />
                       </span>
                       <input
@@ -417,9 +416,9 @@ class EditUserPage extends React.Component {
                       <label htmlFor="icon-button-file">
                         <span
                           style={{
-                            border: "solid 2px #5867DD",
+                            border: "solid 1px #374AFB",
                             color: "#5867DD",
-                            borderRadius: "3px",
+                            borderRadius: 4,
                             padding: "5px 10px",
                             cursor: "pointer",
                           }}
@@ -435,7 +434,7 @@ class EditUserPage extends React.Component {
                         <Form.Label>Full Name</Form.Label>
                         <Form.Control
                           type="text"
-                          id = "editUserFullNametxt"
+                          id="editUserFullNametxt"
                           placeholder="Larissa Mendosa"
                           name="username"
                           value={
@@ -662,63 +661,65 @@ class EditUserPage extends React.Component {
           </Paper>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-5">
           <Paper>
             <Typography
-              style={{ padding: "20px", color: "black", fontSize: 18 }}
+              style={{ padding: "20px", color: "black", fontSize: 18, borderBottom: '1px solid rgba(224, 224, 224, 1)' }}
             >
               Interactions
             </Typography>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {[0, 1, 2, 3, 4].map((row) => (
-                  <TableRow key={row}>
-                    <TableCell component="th" scope="row">
-                      {row}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {row}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <IconButton
-                        aria-label="More"
-                        aria-controls="long-menu"
-                        aria-haspopup="true"
-                        onClick={(e) => this.handleClicKActionMenu(e)}
-                      >
-                        <MoreHorizIcon />
-                      </IconButton>
-                    </TableCell>
-                    <Menu
-                      id="long-menu"
-                      anchorEl={this.state.anchorEl5}
-                      keepMounted
-                      open={Boolean(this.state.anchorEl5)}
-                      onClose={this.handleCloseActionMenu}
-                      PaperProps={{
-                        style: {
-                          maxHeight: ITEM_HEIGHT * 4.5,
-                          width: 100,
-                        },
-                      }}
-                    >
-                      {options5.map((option) => (
-                        <MenuItem key={option} selected={option === "Pyxis"}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Menu>
+            <div style={{padding: '0 10px'}}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {[0, 1, 2, 3, 4].map((row) => (
+                    <TableRow key={row}>
+                      <TableCell component="th" scope="row">
+                        {row}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <IconButton
+                          aria-label="More"
+                          aria-controls="long-menu"
+                          aria-haspopup="true"
+                          onClick={(e) => this.handleClicKActionMenu(e)}
+                        >
+                          <MoreHorizIcon />
+                        </IconButton>
+                      </TableCell>
+                      <Menu
+                        id="long-menu"
+                        anchorEl={this.state.anchorEl5}
+                        keepMounted
+                        open={Boolean(this.state.anchorEl5)}
+                        onClose={this.handleCloseActionMenu}
+                        PaperProps={{
+                          style: {
+                            maxHeight: ITEM_HEIGHT * 4.5,
+                            width: 100,
+                          },
+                        }}
+                      >
+                        {options5.map((option) => (
+                          <MenuItem key={option} selected={option === "Pyxis"}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Menu>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </Paper>
         </div>
       </div>
@@ -735,7 +736,7 @@ const mapStateToProps = createStructuredSelector({
   users: makeSelectUsers(),
 });
 
-function dispatchToProps(dispatch) {
+function dispatchToProps (dispatch) {
   return {
     onSetUsers: (users) => dispatch(setUsers(users)),
   };
