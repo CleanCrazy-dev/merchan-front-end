@@ -15,6 +15,7 @@ import esMessages from "./messages/es";
 import frMessages from "./messages/fr";
 import jaMessages from "./messages/ja";
 import zhMessages from "./messages/zh";
+import ptMessages from "./messages/pt.json"
 
 const allMessages = {
     de: deMessages,
@@ -22,7 +23,8 @@ const allMessages = {
     es: esMessages,
     fr: frMessages,
     ja: jaMessages,
-    zh: zhMessages
+    zh: zhMessages,
+    pt: ptMessages
 };
 
 export default function I18nProvider({ children }) {

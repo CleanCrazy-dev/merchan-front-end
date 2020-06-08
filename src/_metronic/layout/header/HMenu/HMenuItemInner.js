@@ -1,6 +1,7 @@
 import React from "react";
+import { injectIntl } from "react-intl";
 
-export default class HMenuItemInner extends React.Component {
+class HMenuItemInner extends React.Component {
 
   itemCssClassWithBullet(item, parentItem) {
     if (item.bullet) {
@@ -15,7 +16,7 @@ export default class HMenuItemInner extends React.Component {
   }
 
   render() {
-    const { item, parentItem} = this.props;
+    const { item, parentItem, intl} = this.props;
     return (
         <>
           {/* if menu item has icon */}
@@ -32,12 +33,12 @@ export default class HMenuItemInner extends React.Component {
               <>
                 <span className="kt-menu__item-here"/>
                 {/* menu item title text */}
-                <span className="kt-menu__link-text">{item.title}</span>
+                <span className="kt-menu__link-text">{intl.formatMessage({ id: item.translate })}</span>
               </>
           ) : (
               <>
                 {/* menu item with badge */}
-                <span className="kt-menu__link-text">{item.title}</span>
+                <span className="kt-menu__link-text">{intl.formatMessage({ id: item.title })}</span>
                 <span className="kt-menu__link-badge">
               <span className={`kt-badge kt-badge--brand kt-badge--inline kt-badge--pill ${item.badge.type} `}>
                 {item.badge.value}
@@ -49,3 +50,5 @@ export default class HMenuItemInner extends React.Component {
     );
   }
 }
+
+export default injectIntl(HMenuItemInner)
