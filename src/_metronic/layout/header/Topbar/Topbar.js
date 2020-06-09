@@ -5,7 +5,7 @@ import React from "react";
 // import MyCart from "../../../../app/partials/layout/MyCart";
 // import UserNotifications from "../../../../app/partials/layout/UserNotifications";
 import UserProfile from "../../../../app/partials/layout/UserProfile";
-// import LanguageSelector from "../../../../app/partials/layout/LanguageSelector";
+import LanguageSelector from "../../../../app/partials/layout/LanguageSelector";
 // import { toAbsoluteUrl } from "../../../utils/utils";
 
 export default class Topbar extends React.Component {
@@ -44,6 +44,7 @@ export default class Topbar extends React.Component {
         <QuickPanelToggler />
 
         <LanguageSelector iconType="" /> */}
+        <LanguageSelector iconType="" />
 
         <UserProfile showAvatar={false} showHi={true} showBadge={true} />
       </div>
