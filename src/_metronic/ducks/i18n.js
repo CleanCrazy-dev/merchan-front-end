@@ -6,7 +6,7 @@ const actionTypes = {
 };
 
 const initialState = {
-    lang: "en"
+    lang: "pt"
 };
 
 export const reducer = persistReducer(
